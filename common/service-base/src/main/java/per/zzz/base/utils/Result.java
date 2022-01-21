@@ -63,6 +63,13 @@ public final class Result<T> extends AbsBaseScheme {
         return new Result<>(data);
     }
 
+    public static <T> Result<T> fail(String mes) {
+        Result<T> result = new Result<>();
+        result.setCode("fail");
+        result.setMsg(mes);
+        return result;
+    }
+
     public static <T> Result<T> error(BusinessError error) {
         Result<T> result = new Result<>();
         result.setCode(error.getCode().toString());

@@ -1,6 +1,7 @@
 package per.zzz.security.filter;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,6 +11,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
+import per.zzz.base.utils.BusinessError;
+import per.zzz.base.utils.Result;
 import per.zzz.sdr.service.CacheService;
 import per.zzz.security.entity.SecurityUser;
 import per.zzz.security.security.TokenService;
@@ -20,12 +23,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author 阿忠 2669918628@qq.com
  * @since 2022/1/7 14:44
  */
-@Component
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private TokenService tokenService;
 
@@ -46,7 +49,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+            SecurityUser user = new ObjectMapper().readValue(request.getInputStream(), SecurityUser.class);
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), new ArrayList<>()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,18 +59,28 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         SecurityUser securityUser = (SecurityUser) authResult.getPrincipal();
-
         String token = tokenService.creatToken(securityUser.getUsername());
+        cacheService.hSet("user-permissions",securityUser.getUsername(), JSONArray.toJSONString(securityUser.getAuthorities()));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        response.getWriter().write(JSONObject.toJSONString(Result.success(jsonObject)));
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json;charset=UTF-8");
 
-        cacheService.hSet("user-per.zzz.auth.auth",securityUser.getUsername(), JSONArray.toJSONString(securityUser.getAuthorities()));
-
-        response.setHeader("token", token);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        response.setStatus(402);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(JSONObject.toJSONString(Result.fail("wrong user name or password")));
+        response.setContentType("application/json;charset=UTF-8");
+
+
     }
 
 

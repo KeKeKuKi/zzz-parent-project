@@ -10,10 +10,6 @@ spring:
       discovery:
         server-addr: 162.14.77.8:8848
     gateway:
-      routes:
-        - id: auth-server
-          uri: ld://auth-server
-          predicates: Path=/*/auth-server/**
       discovery:
         locator:
           enabled: true

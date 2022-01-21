@@ -1,6 +1,8 @@
 package per.zzz.auth.service;
 
 
+import per.zzz.auth.dto.UserDTO;
+
 /**
  * 服务接口
  *
@@ -10,4 +12,5 @@ package per.zzz.auth.service;
  */
 public interface UserService {
 
+    UserDTO info(String token);
 }

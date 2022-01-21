@@ -19,7 +19,6 @@ import per.zzz.sdr.service.RedisTemplateCacheServiceImpl;
 public class RedisAutoConfiguration {
 
     @Bean
-    @ConditionalOnBean(StringRedisTemplate.class)
     public CacheService redisTemplateCacheServiceImpl(StringRedisTemplate stringRedisTemplate) {
         log.info(">>>>>> RedisTemplateCacheServiceImpl init");
         return new RedisTemplateCacheServiceImpl(stringRedisTemplate);

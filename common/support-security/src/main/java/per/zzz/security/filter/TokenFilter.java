@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
  * @author 阿忠 2669918628@qq.com
  * @since 2022/1/14 16:41
  */
-@Component
 public class TokenFilter extends BasicAuthenticationFilter {
     private CacheService cacheService;
 
