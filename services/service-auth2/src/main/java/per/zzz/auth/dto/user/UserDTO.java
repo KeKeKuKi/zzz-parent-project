@@ -1,4 +1,4 @@
-package per.zzz.auth.dto;
+package per.zzz.auth.dto.user;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
@@ -57,7 +57,7 @@ public class UserDTO extends Model<UserDTO> implements Serializable {
     /**
      * status
      */
-    private String status;
+    private Integer status;
     /**
      * locked
      */

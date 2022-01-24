@@ -7,11 +7,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
-import per.zzz.base.utils.BusinessError;
 import per.zzz.base.utils.Result;
 import per.zzz.sdr.service.CacheService;
 import per.zzz.security.entity.SecurityUser;
@@ -23,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * @author 阿忠 2669918628@qq.com
@@ -77,7 +73,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(JSONObject.toJSONString(Result.fail("wrong user name or password")));
+        response.getWriter().write(JSONObject.toJSONString(Result.fail("Wrong user name or password！")));
         response.setContentType("application/json;charset=UTF-8");
 
 

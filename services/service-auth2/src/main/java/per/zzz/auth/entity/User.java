@@ -64,7 +64,7 @@ public class User extends Model<User> implements Serializable {
     /**
      * status
      */
-    private String status;
+    private Integer status;
     /**
      * locked
      */

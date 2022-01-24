@@ -1,10 +1,13 @@
 package per.zzz.auth.dao;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import per.zzz.auth.entity.Role;
 import per.zzz.auth.mapper.RoleMapper;
+
+import java.util.Date;
 
 /**
  * (t_role)数据DAO

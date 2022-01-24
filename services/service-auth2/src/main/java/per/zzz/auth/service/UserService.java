@@ -1,7 +1,13 @@
 package per.zzz.auth.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import per.zzz.auth.dto.user.UserAddDTO;
+import per.zzz.auth.dto.user.UserDTO;
+import per.zzz.auth.dto.user.UserQueryDTO;
+import per.zzz.auth.entity.User;
+import per.zzz.base.utils.PageRequest;
 
-import per.zzz.auth.dto.UserDTO;
+import java.util.List;
 
 /**
  * 服务接口
@@ -13,4 +19,14 @@ import per.zzz.auth.dto.UserDTO;
 public interface UserService {
 
     UserDTO info(String token);
+
+    IPage<User> page(PageRequest<UserQueryDTO> pageRequest);
+
+    List<User> list(UserQueryDTO queryDTO);
+
+    User findById(Long id);
+
+    Boolean add(UserAddDTO dto);
+
+    Boolean update(UserDTO dto);
 }

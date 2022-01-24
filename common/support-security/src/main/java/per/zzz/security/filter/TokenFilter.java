@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import per.zzz.sdr.service.CacheService;
 import per.zzz.security.security.TokenService;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +24,9 @@ import java.util.stream.Collectors;
  * @since 2022/1/14 16:41
  */
 public class TokenFilter extends BasicAuthenticationFilter {
+    @Resource
     private CacheService cacheService;
-
+    @Resource
     private TokenService tokenService;
 
     public TokenFilter(AuthenticationManager authenticationManager, CacheService cacheService, TokenService tokenService) {
@@ -49,7 +51,7 @@ public class TokenFilter extends BasicAuthenticationFilter {
             return null;
         }
         String userName = tokenService.getUserInfo(token);
-        String s = cacheService.hGet("user-per.zzz.auth.auth", userName);
+        String s = cacheService.hGet("user-permissions", userName);
         List<String> permissions = JSONArray.parseArray(s, String.class);
         return new UsernamePasswordAuthenticationToken(userName, token, permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
     }
