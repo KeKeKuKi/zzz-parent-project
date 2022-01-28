@@ -16,6 +16,7 @@ import per.zzz.base.utils.Result;
 import per.zzz.mybatis.utils.PageData;
 import per.zzz.mybatis.utils.PageRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,11 @@ public class UserController {
     @GetMapping("/info")
     public Result<UserDTO> info(String token) {
         return Result.success(userService.info(token));
+    }
+
+    @GetMapping("/logout")
+    public Result<Boolean> logout(HttpServletRequest request) {
+        return Result.success(userService.logout(request));
     }
 
     @PostMapping("/page")

@@ -1,6 +1,7 @@
 package per.zzz.auth.service.impl;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,10 @@ import per.zzz.auth.service.UserService;
 import per.zzz.base.utils.BeanCopyUtils;
 import per.zzz.mybatis.utils.PageRequest;
 import per.zzz.mybatis.utils.QueryWrapperBuilder;
+import per.zzz.sdr.service.CacheService;
 import per.zzz.security.security.TokenService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +49,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRoleService userRoleService;
 
+    private final CacheService cacheService;
+
     private QueryWrapperBuilder<User> buildQuery(UserQueryDTO queryParam) {
         return QueryWrapperBuilder.<User>wrapper()
                 .eq(User::getUsername, queryParam.getUsername())
@@ -62,6 +67,7 @@ public class UserServiceImpl implements UserService {
         QueryWrapperBuilder<User> eq = QueryWrapperBuilder.<User>wrapper().eq(User::getUsername, userInfo);
         UserDTO copy = BeanCopyUtils.copy(userDao.getOne(eq), new UserDTO());
         copy.setRoles(Collections.singletonList(new Role()));
+        copy.setPermissions(JSONArray.parseArray(cacheService.hGet("user-permissions", userInfo), String.class));
         return copy;
     }
 
@@ -118,5 +124,17 @@ public class UserServiceImpl implements UserService {
         });
 
         return userDao.updateById(BeanCopyUtils.copy(dto, new User()));
+    }
+
+    @Override
+    public Boolean logout(HttpServletRequest request) {
+        String token = request.getHeader("token");
+
+        if(token != null){
+            tokenService.removeToken(token);
+            String userName = tokenService.getUserInfo(token);
+            cacheService.hDel("user-permissions", userName);
+        }
+        return true;
     }
 }

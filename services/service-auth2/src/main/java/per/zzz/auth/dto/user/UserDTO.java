@@ -74,4 +74,6 @@ public class UserDTO extends Model<UserDTO> implements Serializable {
 
     private List<Integer> roleIds;
 
+    private List<String> permissions;
+
 }

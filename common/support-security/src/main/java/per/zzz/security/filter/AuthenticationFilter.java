@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import per.zzz.base.utils.Result;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * @author 阿忠 2669918628@qq.com
@@ -59,7 +61,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.setCharacterEncoding("UTF-8");
         SecurityUser securityUser = (SecurityUser) authResult.getPrincipal();
         String token = tokenService.creatToken(securityUser.getUsername());
-        cacheService.hSet("user-permissions",securityUser.getUsername(), JSONArray.toJSONString(securityUser.getAuthorities()));
+        cacheService.hSet("user-permissions",securityUser.getUsername(), JSONArray.toJSONString(securityUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())));
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
         response.getWriter().write(JSONObject.toJSONString(Result.success(jsonObject)));

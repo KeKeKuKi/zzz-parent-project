@@ -59,7 +59,7 @@ public class PermissionServiceImpl implements PermissionService {
             return new ArrayList<>();
         }
         return permissionDao.list(QueryWrapperBuilder.<Permission>wrapper()
-                .in(Permission::getId, rolePermissions.stream().map(RolePermission::getRid).collect(Collectors.toList())));
+                .in(Permission::getId, rolePermissions.stream().map(RolePermission::getMid).collect(Collectors.toList())));
     }
 
     @Override

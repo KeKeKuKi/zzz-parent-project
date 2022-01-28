@@ -7,6 +7,7 @@ import per.zzz.auth.dto.user.UserQueryDTO;
 import per.zzz.auth.entity.User;
 import per.zzz.mybatis.utils.PageRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -29,4 +30,6 @@ public interface UserService {
     Boolean add(UserAddDTO dto);
 
     Boolean update(UserDTO dto);
+
+    Boolean logout(HttpServletRequest request);
 }

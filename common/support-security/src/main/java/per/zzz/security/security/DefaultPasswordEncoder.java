@@ -2,7 +2,6 @@ package per.zzz.security.security;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import per.zzz.base.utils.MD5;
 
 /**
  * @author 阿忠 2669918628@qq.com
