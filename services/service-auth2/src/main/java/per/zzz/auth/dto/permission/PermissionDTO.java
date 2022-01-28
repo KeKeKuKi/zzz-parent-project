@@ -1,6 +1,9 @@
 package per.zzz.auth.dto.permission;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -8,7 +11,10 @@ import java.util.Date;
  * @author 阿忠 2669918628@qq.com
  * @since 2022/1/24 15:05
  */
+@Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PermissionDTO {
     private Integer id;
     /**

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import per.zzz.auth.entity.Role;
 import per.zzz.auth.mapper.RoleMapper;
 
+import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * (t_role)数据DAO
@@ -19,5 +21,10 @@ import java.util.Date;
 @Slf4j
 @Repository
 public class RoleDao extends ServiceImpl<RoleMapper, Role> {
+    @Resource
+    private RoleMapper roleMapper;
 
+    public List<Role> listByUserId(Long userId) {
+        return roleMapper.listByUserId(userId);
+    }
 }

@@ -2,6 +2,7 @@ package per.zzz.auth.dto.user;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import per.zzz.auth.entity.Role;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -69,6 +70,8 @@ public class UserDTO extends Model<UserDTO> implements Serializable {
 
     //*******************************************************************
 
-    private List<String> roles;
+    private List<Role> roles;
+
+    private List<Integer> roleIds;
 
 }

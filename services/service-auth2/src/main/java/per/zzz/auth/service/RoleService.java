@@ -2,10 +2,11 @@ package per.zzz.auth.service;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import per.zzz.auth.dto.role.RoleAddDTO;
 import per.zzz.auth.dto.role.RoleDTO;
+import per.zzz.auth.dto.role.RoleUpdateDTO;
 import per.zzz.auth.entity.Role;
-import per.zzz.auth.entity.User;
-import per.zzz.base.utils.PageRequest;
+import per.zzz.mybatis.utils.PageRequest;
 
 import java.util.List;
 
@@ -22,9 +23,11 @@ public interface RoleService {
 
     List<Role> list(RoleDTO queryDTO);
 
+    List<Role> listByUserId(Long userId);
+
     Role findById(Integer id);
 
-    Boolean add(RoleDTO dto);
+    Boolean add(RoleAddDTO dto);
 
-    boolean update(RoleDTO dto);
+    boolean update(RoleUpdateDTO dto);
 }

@@ -3,14 +3,19 @@ package per.zzz.auth.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+import per.zzz.auth.dto.permission.PermissionDTO;
+import per.zzz.auth.dto.role.RoleAddDTO;
 import per.zzz.auth.dto.role.RoleDTO;
+import per.zzz.auth.dto.role.RoleUpdateDTO;
 import per.zzz.auth.entity.Role;
+import per.zzz.auth.service.PermissionService;
 import per.zzz.auth.service.RoleService;
 import per.zzz.base.utils.BeanCopyUtils;
-import per.zzz.base.utils.PageRequest;
 import per.zzz.base.utils.Result;
+import per.zzz.mybatis.utils.PageData;
+import per.zzz.mybatis.utils.PageRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,20 +34,21 @@ import java.util.stream.Collectors;
 public class RoleController {
     private final RoleService roleService;
 
+    private final PermissionService permissionService;
+
 
     @PostMapping("/page")
-    Result<PageImpl<RoleDTO>> page(@RequestBody PageRequest<RoleDTO> pageRequest) {
+    Result<PageData<RoleDTO>> page(@RequestBody PageRequest<RoleDTO> pageRequest) {
         IPage<Role> pageData = roleService.page(pageRequest);
-        PageImpl<RoleDTO> page = new PageImpl<>(
-                pageData.getRecords().stream().map(i -> BeanCopyUtils.copy(i, new RoleDTO())).collect(Collectors.toList()),
-                pageRequest,
-                pageData.getTotal()
-        );
-        return Result.success(page);
+        return Result.success(PageData.of(pageData.getTotal(), (i) -> {
+            RoleDTO copy = BeanCopyUtils.copy(i, new RoleDTO());
+            copy.setPermissions( permissionService.listByRoleId(i.getId()));
+            return copy;
+        }, pageData.getRecords()));
     }
 
     @PostMapping("/list")
-    Result<List<RoleDTO>> page(@RequestBody RoleDTO queryDTO) {
+    Result<List<RoleDTO>> list(@RequestBody RoleDTO queryDTO) {
         List<Role> pageData = roleService.list(queryDTO);
         return Result.success(pageData.stream().map(i -> BeanCopyUtils.copy(i, new RoleDTO())).collect(Collectors.toList()));
     }
@@ -54,12 +60,12 @@ public class RoleController {
     }
 
     @PostMapping("/add")
-    Result<Boolean> add(@RequestBody RoleDTO dto){
+    Result<Boolean> add(@RequestBody RoleAddDTO dto){
         return Result.success(roleService.add(dto));
     }
 
     @PostMapping("/update")
-    Result<Boolean> update(@RequestBody RoleDTO dto){
+    Result<Boolean> update(@RequestBody RoleUpdateDTO dto){
         return Result.success(roleService.update(dto));
     }
 

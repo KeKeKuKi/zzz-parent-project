@@ -3,17 +3,14 @@ package per.zzz.auth.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 import per.zzz.auth.dto.permission.PermissionDTO;
-import per.zzz.auth.dto.role.RoleDTO;
 import per.zzz.auth.entity.Permission;
-import per.zzz.auth.entity.Role;
-import per.zzz.auth.mapper.PermissionMapper;
 import per.zzz.auth.service.PermissionService;
 import per.zzz.base.utils.BeanCopyUtils;
-import per.zzz.base.utils.PageRequest;
 import per.zzz.base.utils.Result;
+import per.zzz.mybatis.utils.PageData;
+import per.zzz.mybatis.utils.PageRequest;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,21 +27,16 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/permission")
 public class PermissionController {
-    private PermissionService permissionService;
+    private final PermissionService permissionService;
 
     @PostMapping("/page")
-    Result<PageImpl<PermissionDTO>> page(@RequestBody PageRequest<PermissionDTO> pageRequest) {
+    Result<PageData<PermissionDTO>> page(@RequestBody PageRequest<PermissionDTO> pageRequest) {
         IPage<Permission> pageData = permissionService.page(pageRequest);
-        PageImpl<PermissionDTO> page = new PageImpl<>(
-                pageData.getRecords().stream().map(i -> BeanCopyUtils.copy(i, new PermissionDTO())).collect(Collectors.toList()),
-                pageRequest,
-                pageData.getTotal()
-        );
-        return Result.success(page);
+        return Result.success(PageData.of(pageData.getTotal(), (i) -> BeanCopyUtils.copy(i, new PermissionDTO()), pageData.getRecords()));
     }
 
     @PostMapping("/list")
-    Result<List<PermissionDTO>> page(@RequestBody PermissionDTO queryDTO) {
+    Result<List<PermissionDTO>> list(@RequestBody PermissionDTO queryDTO) {
         List<Permission> pageData = permissionService.list(queryDTO);
         return Result.success(pageData.stream().map(i -> BeanCopyUtils.copy(i, new PermissionDTO())).collect(Collectors.toList()));
     }
@@ -53,6 +45,11 @@ public class PermissionController {
     Result<PermissionDTO> getById(@PathVariable("id") Integer id){
         Permission byId = permissionService.findById(id);
         return Result.success(byId != null ? BeanCopyUtils.copy(byId, new PermissionDTO()) : null);
+    }
+
+    @GetMapping("/del/{id}")
+    Result<Boolean> del(@PathVariable("id") Integer id){
+        return Result.success(permissionService.del(id));
     }
 
     @PostMapping("/add")

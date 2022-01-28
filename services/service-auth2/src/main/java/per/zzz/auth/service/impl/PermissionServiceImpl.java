@@ -1,10 +1,13 @@
 package per.zzz.auth.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import per.zzz.auth.dao.PermissionDao;
 import per.zzz.auth.dao.RolePermissionDao;
 import per.zzz.auth.dao.UserRoleDao;
@@ -14,9 +17,10 @@ import per.zzz.auth.entity.RolePermission;
 import per.zzz.auth.entity.UserRole;
 import per.zzz.auth.service.PermissionService;
 import per.zzz.base.utils.BeanCopyUtils;
-import per.zzz.base.utils.PageRequest;
-import per.zzz.base.utils.QueryWrapperBuilder;
+import per.zzz.mybatis.utils.PageRequest;
+import per.zzz.mybatis.utils.QueryWrapperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +42,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     private final RolePermissionDao rolePermissionDao;
 
-    private  QueryWrapperBuilder<Permission> buildQuery(PermissionDTO queryParam){
+    private QueryWrapperBuilder<Permission> buildQuery(PermissionDTO queryParam){
         return QueryWrapperBuilder.<Permission>wrapper()
                 .eq(Permission::getName, queryParam.getName())
                 .eq(Permission::getPath, queryParam.getPath())
@@ -51,13 +55,16 @@ public class PermissionServiceImpl implements PermissionService {
         List<UserRole> list = userRoleDao.list(QueryWrapperBuilder.<UserRole>wrapper().eq(UserRole::getUid, userId));
         List<RolePermission> rolePermissions = rolePermissionDao.list(QueryWrapperBuilder.<RolePermission>wrapper()
                 .in(RolePermission::getRid, list.stream().map(UserRole::getRid).collect(Collectors.toList())));
+        if (CollectionUtils.isEmpty(rolePermissions)){
+            return new ArrayList<>();
+        }
         return permissionDao.list(QueryWrapperBuilder.<Permission>wrapper()
                 .in(Permission::getId, rolePermissions.stream().map(RolePermission::getRid).collect(Collectors.toList())));
     }
 
     @Override
     public IPage<Permission> page(PageRequest<PermissionDTO> pageRequest) {
-        return permissionDao.page(new Page<>(pageRequest.getPageNumber(), pageRequest.getPageSize()), buildQuery(pageRequest.getQueryParam()));
+        return permissionDao.page(new Page<>(pageRequest.getPage(), pageRequest.getSize()), buildQuery(pageRequest.getQueryParam()));
     }
 
     @Override
@@ -78,5 +85,19 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public Boolean update(PermissionDTO dto) {
         return permissionDao.updateById(BeanCopyUtils.copy(dto, new Permission()));
+    }
+
+    @Override
+    public List<Permission> listByRoleId(Integer roleId) {
+        return permissionDao.listByRoleId(roleId);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Boolean del(Integer id) {
+        QueryWrapperBuilder<RolePermission> wrapper = QueryWrapperBuilder.<RolePermission>wrapper().eq(RolePermission::getMid, id);
+        rolePermissionDao.remove(wrapper);
+        permissionDao.removeById(id);
+        return true;
     }
 }

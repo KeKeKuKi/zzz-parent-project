@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 import per.zzz.auth.entity.Permission;
 import per.zzz.auth.mapper.PermissionMapper;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * (t_permission)数据DAO
  *
@@ -16,5 +19,10 @@ import per.zzz.auth.mapper.PermissionMapper;
 @Slf4j
 @Repository
 public class PermissionDao extends ServiceImpl<PermissionMapper, Permission> {
+    @Resource
+    private PermissionMapper permissionMapper;
 
+    public List<Permission> listByRoleId(Integer roleId) {
+        return permissionMapper.listByRoleId(roleId);
+    }
 }

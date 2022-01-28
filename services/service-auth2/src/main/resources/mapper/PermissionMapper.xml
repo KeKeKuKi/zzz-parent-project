@@ -9,4 +9,10 @@
         id,name,path,type,value,component,icon,created_time,modify_time
     </sql>
 
+    <select id="listByRoleId" resultType="per.zzz.auth.entity.Permission">
+        select <include refid="baseColumn"></include> from t_permission where id in (
+            select mid from t_role_permission where rid = #{roleId}
+        )
+    </select>
+
 </mapper>

@@ -1,4 +1,4 @@
-package per.zzz.base.utils;
+package per.zzz.mybatis.utils;
 
 import com.baomidou.mybatisplus.core.conditions.AbstractLambdaWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;

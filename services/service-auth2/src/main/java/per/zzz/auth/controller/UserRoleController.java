@@ -2,12 +2,14 @@ package per.zzz.auth.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import per.zzz.auth.mapper.UserRoleMapper;
-import per.zzz.auth.service.UserService;
-
-import javax.annotation.Resource;
+import per.zzz.auth.dto.userRole.UserRoleDTO;
+import per.zzz.auth.service.UserRoleService;
+import per.zzz.base.utils.Result;
 
 /**
  * 服务控制器
@@ -21,8 +23,17 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/userRole")
 public class UserRoleController {
-    @Resource
-    private final UserService userService;
+    private final UserRoleService userRoleService;
 
+    @Validated
+    @PostMapping("/add")
+    Result<Boolean> add(@RequestBody UserRoleDTO dto){
+        return Result.success(userRoleService.add(dto));
+    }
 
+    @Validated
+    @PostMapping("/del")
+    Result<Boolean> del(@RequestBody UserRoleDTO dto){
+        return Result.success(userRoleService.del(dto));
+    }
 }

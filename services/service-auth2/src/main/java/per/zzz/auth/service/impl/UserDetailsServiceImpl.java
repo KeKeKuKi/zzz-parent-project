@@ -10,9 +10,10 @@ import per.zzz.auth.entity.Permission;
 import per.zzz.auth.entity.User;
 import per.zzz.auth.service.PermissionService;
 import per.zzz.base.utils.BeanCopyUtils;
-import per.zzz.base.utils.QueryWrapperBuilder;
+import per.zzz.mybatis.utils.QueryWrapperBuilder;
 import per.zzz.security.entity.SecurityUser;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User one = userDao.getOne(QueryWrapperBuilder.<User>wrapper().eq(User::getUsername, userName));
         Assert.isTrue(one != null, "账户不存在");
+        one.setLastLogin(new Date());
+        userDao.updateById(one);
         List<Permission> permissions = permissionService.listByUserId(one.getId());
         final SecurityUser copy = BeanCopyUtils.copy(one, new SecurityUser());
         copy.setPermissions(permissions.stream().map(Permission::getValue).collect(Collectors.toList()));

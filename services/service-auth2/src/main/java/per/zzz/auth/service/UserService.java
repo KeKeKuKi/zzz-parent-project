@@ -5,7 +5,7 @@ import per.zzz.auth.dto.user.UserAddDTO;
 import per.zzz.auth.dto.user.UserDTO;
 import per.zzz.auth.dto.user.UserQueryDTO;
 import per.zzz.auth.entity.User;
-import per.zzz.base.utils.PageRequest;
+import per.zzz.mybatis.utils.PageRequest;
 
 import java.util.List;
 

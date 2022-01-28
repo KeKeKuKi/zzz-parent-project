@@ -4,8 +4,7 @@ package per.zzz.auth.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import per.zzz.auth.dto.permission.PermissionDTO;
 import per.zzz.auth.entity.Permission;
-import per.zzz.auth.entity.Role;
-import per.zzz.base.utils.PageRequest;
+import per.zzz.mybatis.utils.PageRequest;
 
 import java.util.List;
 
@@ -28,4 +27,8 @@ public interface PermissionService {
     Boolean add(PermissionDTO dto);
 
     Boolean update(PermissionDTO dto);
+
+    List<Permission> listByRoleId(Integer roleId);
+
+    Boolean del(Integer id);
 }

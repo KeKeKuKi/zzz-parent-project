@@ -1,6 +1,11 @@
 package per.zzz.auth.service;
 
 
+import per.zzz.auth.dto.userRole.UserRoleDTO;
+import per.zzz.auth.entity.UserRole;
+
+import java.util.List;
+
 /**
  * 服务接口
  *
@@ -10,4 +15,9 @@ package per.zzz.auth.service;
  */
 public interface UserRoleService {
 
+    Boolean add(UserRoleDTO dto);
+
+    List<UserRole> list(UserRoleDTO dto);
+
+    Boolean del(UserRoleDTO dto);
 }

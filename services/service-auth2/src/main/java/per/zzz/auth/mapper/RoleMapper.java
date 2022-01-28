@@ -4,6 +4,8 @@ import per.zzz.auth.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * (t_role)数据Mapper
  *
@@ -14,4 +16,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RoleMapper extends BaseMapper<Role> {
 
+    List<Role> listByUserId(Long userId);
 }

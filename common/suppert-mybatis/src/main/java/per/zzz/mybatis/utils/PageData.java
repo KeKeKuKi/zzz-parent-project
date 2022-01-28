@@ -1,4 +1,4 @@
-package per.zzz.base.utils;
+package per.zzz.mybatis.utils;
 
 import java.io.Serializable;
 import java.util.List;

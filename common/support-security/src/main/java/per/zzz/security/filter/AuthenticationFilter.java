@@ -73,10 +73,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(JSONObject.toJSONString(Result.fail("Wrong user name or password！")));
+        response.getWriter().write(JSONObject.toJSONString(Result.fail(failed.getMessage())));
         response.setContentType("application/json;charset=UTF-8");
-
-
     }
 
 

@@ -1,5 +1,6 @@
 package per.zzz.auth.dto.user;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
  * @since 2022/1/24 10:20
  */
 @Data
+@Builder
 public class UserQueryDTO {
     private String username;
 

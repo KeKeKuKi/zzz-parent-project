@@ -5,6 +5,7 @@ spring:
     nacos:
       discovery:
         server-addr: 162.14.77.8:8848
+        watch-delay: 5000
   application:
     name: auth-server
   redis:
@@ -21,3 +22,4 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:/mapper/**Mapper.xml

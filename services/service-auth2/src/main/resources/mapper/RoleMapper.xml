@@ -9,4 +9,10 @@
         id,name,code,created_time,modify_time
     </sql>
 
+    <select id="listByUserId" resultType="per.zzz.auth.entity.Role">
+        select <include refid="baseColumn"></include> from t_role where id in (
+            select DISTINCT rid from t_user_role where uid = #{userId}
+        )
+    </select>
+
 </mapper>

@@ -1,6 +1,13 @@
 package per.zzz.auth.service;
 
 
+import per.zzz.auth.dto.permission.PermissionDTO;
+import per.zzz.auth.dto.rolePermission.RolePermissionDTO;
+import per.zzz.auth.entity.Permission;
+import per.zzz.auth.entity.RolePermission;
+
+import java.util.List;
+
 /**
  * 服务接口
  *
@@ -10,4 +17,9 @@ package per.zzz.auth.service;
  */
 public interface RolePermissionService {
 
+    Boolean add(RolePermissionDTO dto);
+
+    Boolean del(RolePermissionDTO dto);
+
+    List<RolePermission> list(RolePermissionDTO dto);
 }

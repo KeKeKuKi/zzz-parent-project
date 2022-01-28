@@ -4,6 +4,8 @@ import per.zzz.auth.entity.Permission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * (t_permission)数据Mapper
  *
@@ -14,4 +16,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PermissionMapper extends BaseMapper<Permission> {
 
+    List<Permission> listByRoleId(Integer roleId);
 }
