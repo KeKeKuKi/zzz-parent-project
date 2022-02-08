@@ -13,9 +13,9 @@ import per.zzz.sdr.service.CacheService;
 @Component
 public class TokenLogoutHandler implements LogoutHandler {
 
-    private CacheService cacheService;
+    private final CacheService cacheService;
 
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
     public TokenLogoutHandler(CacheService cacheService, TokenService tokenService) {
         this.cacheService = cacheService;

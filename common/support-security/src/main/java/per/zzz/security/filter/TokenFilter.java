@@ -23,10 +23,9 @@ import java.util.stream.Collectors;
  * @since 2022/1/14 16:41
  */
 public class TokenFilter extends BasicAuthenticationFilter {
-    @Resource
-    private CacheService cacheService;
-    @Resource
-    private TokenService tokenService;
+    private final CacheService cacheService;
+
+    private final TokenService tokenService;
 
     public TokenFilter(AuthenticationManager authenticationManager, CacheService cacheService, TokenService tokenService) {
         super(authenticationManager);

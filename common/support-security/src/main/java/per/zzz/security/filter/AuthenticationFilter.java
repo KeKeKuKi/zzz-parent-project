@@ -28,11 +28,11 @@ import java.util.stream.Collectors;
  * @since 2022/1/7 14:44
  */
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private TokenService tokenService;
+    private final TokenService tokenService;
 
-    private CacheService cacheService;
+    private final CacheService cacheService;
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     public AuthenticationFilter(TokenService tokenService, CacheService cacheService, AuthenticationManager authenticationManager) {
         this.tokenService = tokenService;
