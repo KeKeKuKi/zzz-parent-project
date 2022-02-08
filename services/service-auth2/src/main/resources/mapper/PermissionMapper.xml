@@ -15,4 +15,8 @@
         )
     </select>
 
+    <select id="findByValue" resultType="per.zzz.auth.entity.Permission">
+        select <include refid="baseColumn"></include> from t_permission where value = #{value}
+    </select>
+
 </mapper>

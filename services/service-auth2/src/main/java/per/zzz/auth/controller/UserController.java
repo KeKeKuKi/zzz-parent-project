@@ -15,6 +15,7 @@ import per.zzz.base.utils.BeanCopyUtils;
 import per.zzz.base.utils.Result;
 import per.zzz.mybatis.utils.PageData;
 import per.zzz.mybatis.utils.PageRequest;
+import per.zzz.security.annotations.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -31,22 +32,26 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
+@ZzzAuthGroup(name = "用户管理",value = "user")
 public class UserController {
 
     private final UserService userService;
 
     private final RoleService roleService;
 
+    @ZzzAuthTagSelect
     @GetMapping("/info")
     public Result<UserDTO> info(String token) {
         return Result.success(userService.info(token));
     }
 
+    @ZzzAuthTagCustom(name = "注销", value = "logout")
     @GetMapping("/logout")
     public Result<Boolean> logout(HttpServletRequest request) {
         return Result.success(userService.logout(request));
     }
 
+    @ZzzAuthTagSelect
     @PostMapping("/page")
     Result<PageData<UserDTO>> page(@RequestBody PageRequest<UserQueryDTO> pageRequest) {
         IPage<User> pageData = userService.page(pageRequest);
@@ -70,11 +75,13 @@ public class UserController {
         return Result.success(byId != null ? BeanCopyUtils.copy(byId, new UserDTO()) : null);
     }
 
+    @ZzzAuthTagAdd
     @PostMapping("/add")
     Result<Boolean> add(@RequestBody UserAddDTO dto){
         return Result.success(userService.add(dto));
     }
 
+    @ZzzAuthTagUpdate
     @PostMapping("/update")
     Result<Boolean> update(@RequestBody UserDTO dto){
         return Result.success(userService.update(dto));

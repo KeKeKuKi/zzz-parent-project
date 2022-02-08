@@ -15,12 +15,14 @@ import per.zzz.auth.dto.permission.PermissionDTO;
 import per.zzz.auth.entity.Permission;
 import per.zzz.auth.entity.RolePermission;
 import per.zzz.auth.entity.UserRole;
+import per.zzz.auth.mapper.PermissionMapper;
 import per.zzz.auth.service.PermissionService;
 import per.zzz.base.utils.BeanCopyUtils;
 import per.zzz.mybatis.utils.PageRequest;
 import per.zzz.mybatis.utils.QueryWrapperBuilder;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +43,8 @@ public class PermissionServiceImpl implements PermissionService {
     private final UserRoleDao userRoleDao;
 
     private final RolePermissionDao rolePermissionDao;
+
+    private final PermissionMapper permissionMapper;
 
     private QueryWrapperBuilder<Permission> buildQuery(PermissionDTO queryParam){
         return QueryWrapperBuilder.<Permission>wrapper()
@@ -78,12 +82,25 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    public Permission findByValue(String value) {
+        return permissionMapper.findByValue(value);
+    }
+
+    @Override
     public Boolean add(PermissionDTO dto) {
+        Permission byValue = permissionMapper.findByValue(dto.getValue());
+        if(byValue != null){
+            return false;
+        }
+
+        dto.setType(1);
+        dto.setCreatedTime(new Date());
         return permissionDao.save(BeanCopyUtils.copy(dto, new Permission()));
     }
 
     @Override
     public Boolean update(PermissionDTO dto) {
+        dto.setModifyTime(new Date());
         return permissionDao.updateById(BeanCopyUtils.copy(dto, new Permission()));
     }
 

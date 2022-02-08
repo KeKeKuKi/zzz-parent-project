@@ -17,4 +17,6 @@ import java.util.List;
 public interface PermissionMapper extends BaseMapper<Permission> {
 
     List<Permission> listByRoleId(Integer roleId);
+
+    Permission findByValue(String value);
 }

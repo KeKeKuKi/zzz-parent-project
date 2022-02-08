@@ -31,4 +31,6 @@ public interface PermissionService {
     List<Permission> listByRoleId(Integer roleId);
 
     Boolean del(Integer id);
+
+    Permission findByValue(String value);
 }
