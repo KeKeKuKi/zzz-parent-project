@@ -59,6 +59,11 @@ public class RoleController {
         return Result.success(byId != null ? BeanCopyUtils.copy(byId, new RoleDTO()) : null);
     }
 
+    @GetMapping("/del/{id}")
+    Result<Boolean> del(@PathVariable("id") Integer id){
+        return Result.success(roleService.del(id));
+    }
+
     @PostMapping("/add")
     Result<Boolean> add(@RequestBody RoleAddDTO dto){
         return Result.success(roleService.add(dto));

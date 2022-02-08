@@ -88,5 +88,11 @@ public class RoleServiceImpl implements RoleService {
         return roleDao.updateById(BeanCopyUtils.copy(dto, new Role()));
     }
 
-
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Boolean del(Integer id) {
+        rolePermissionService.del(RolePermissionDTO.builder().rid(id).build());
+        roleDao.removeById(id);
+        return true;
+    }
 }

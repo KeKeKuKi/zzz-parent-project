@@ -30,4 +30,6 @@ public interface RoleService {
     Boolean add(RoleAddDTO dto);
 
     boolean update(RoleUpdateDTO dto);
+
+    Boolean del(Integer id);
 }
