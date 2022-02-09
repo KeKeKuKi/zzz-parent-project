@@ -12,6 +12,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import per.zzz.base.utils.Result;
 import per.zzz.sdr.service.CacheService;
+import per.zzz.security.core.SecurityContext;
+import per.zzz.security.core.SecurityContextHolder;
 import per.zzz.security.entity.SecurityUser;
 import per.zzz.security.security.TokenService;
 
@@ -21,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -61,13 +65,14 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         response.setCharacterEncoding("UTF-8");
         SecurityUser securityUser = (SecurityUser) authResult.getPrincipal();
         String token = tokenService.creatToken(securityUser.getUsername());
-        cacheService.hSet("user-permissions",securityUser.getUsername(), JSONArray.toJSONString(securityUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())));
+        List<String> collect = securityUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        cacheService.hSet("user-permissions",securityUser.getUsername(), JSONArray.toJSONString(collect));
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
         response.getWriter().write(JSONObject.toJSONString(Result.success(jsonObject)));
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json;charset=UTF-8");
-
+        SecurityContextHolder.set(SecurityContext.builder().permissions(new HashSet<>(collect)).token(token).build());
     }
 
     @Override

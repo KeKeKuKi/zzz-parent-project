@@ -25,6 +25,7 @@ import per.zzz.base.utils.BeanCopyUtils;
 import per.zzz.mybatis.utils.PageRequest;
 import per.zzz.mybatis.utils.QueryWrapperBuilder;
 import per.zzz.sdr.service.CacheService;
+import per.zzz.security.core.SecurityContextHolder;
 import per.zzz.security.security.TokenService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -135,6 +136,8 @@ public class UserServiceImpl implements UserService {
             String userName = tokenService.getUserInfo(token);
             cacheService.hDel("user-permissions", userName);
         }
+
+        SecurityContextHolder.clear();
         return true;
     }
 }

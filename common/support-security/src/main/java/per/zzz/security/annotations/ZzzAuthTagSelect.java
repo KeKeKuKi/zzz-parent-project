@@ -14,8 +14,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
+@ZzzAuthTag(name = "查询", value = "select")
 public @interface ZzzAuthTagSelect {
-    String name() default "查询";
-
-    String value() default "select";
 }

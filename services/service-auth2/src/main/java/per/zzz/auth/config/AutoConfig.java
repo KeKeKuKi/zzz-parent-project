@@ -9,9 +9,13 @@ import org.springframework.stereotype.Component;
 import per.zzz.auth.dto.permission.PermissionDTO;
 import per.zzz.auth.service.PermissionService;
 import per.zzz.security.annotations.*;
+import per.zzz.security.core.SecurityResourceRepository;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -38,51 +42,44 @@ public class AutoConfig implements BeanPostProcessor {
     private void initAuth(Object bean, String beanName){
         ZzzAuthGroup annotation2 = bean.getClass().getAnnotation(ZzzAuthGroup.class);
         if(Objects.nonNull(annotation2)){
+            List<ZzzAuthEntity> authEntities = new ArrayList<>();
             Method[] declaredMethods = bean.getClass().getDeclaredMethods();
             for (Method method : declaredMethods) {
                 Annotation[] annotations = method.getAnnotations();
                 for (Annotation annotation : annotations) {
-                    ZzzAuthEntity tagAnnotation = isTagAnnotation(annotation);
-                    if (tagAnnotation != null){
-                        String system = "application01";
-                        String group = annotation2.value();
-                        String tag = tagAnnotation.getValue();
-                        String permission = system + ":" + group + ":" + tag;
-                        String permissionName = annotation2.name() + "-" + tagAnnotation.getName();
-                        savePermission(permission, permissionName);
+                    if(annotation.annotationType().isAssignableFrom(ZzzAuthTagCustom.class)){
+                        ZzzAuthTagCustom authTagCustom = (ZzzAuthTagCustom) annotation;
+                        authEntities.add(ZzzAuthEntity.builder().name(authTagCustom.name()).value(authTagCustom.value()).build());
+                    }else if(isTagAnnotation(annotation)){
+                        ZzzAuthTag annotation1 = annotation.annotationType().getAnnotation(ZzzAuthTag.class);
+                        if (annotation1 != null){
+                            authEntities.add(ZzzAuthEntity.builder().name(annotation1.name()).value(annotation1.value()).build());
+                            SecurityResourceRepository.save(annotation1, "application01:" + annotation2.value() + ":" + annotation1.value());
+                        }
                     }
                 }
+            }
+            for (ZzzAuthEntity next : authEntities) {
+
+                String name = annotation2.name() + "-" + next.getName();
+                String value = "application01:" + annotation2.value() + ":" + next.getValue();
+                // 保存至数据库
+                savePermission(name, value);
+
+                // 保存至本地缓存
 
             }
         }
     }
 
-    private ZzzAuthEntity isTagAnnotation(Annotation annotation){
-        if(annotation.annotationType().isAssignableFrom(ZzzAuthTagAdd.class)){
-            ZzzAuthTagAdd a = (ZzzAuthTagAdd) annotation;
-            return ZzzAuthEntity.builder().name(a.name()).value(a.value()).build();
-        }
-        if(annotation.annotationType().isAssignableFrom(ZzzAuthTagDel.class)){
-            ZzzAuthTagDel a = (ZzzAuthTagDel) annotation;
-            return ZzzAuthEntity.builder().name(a.name()).value(a.value()).build();
-        }
-        if(annotation.annotationType().isAssignableFrom(ZzzAuthTagUpdate.class)){
-            ZzzAuthTagUpdate a = (ZzzAuthTagUpdate) annotation;
-            return ZzzAuthEntity.builder().name(a.name()).value(a.value()).build();
-        }
-        if(annotation.annotationType().isAssignableFrom(ZzzAuthTagSelect.class)){
-            ZzzAuthTagSelect a = (ZzzAuthTagSelect) annotation;
-            return ZzzAuthEntity.builder().name(a.name()).value(a.value()).build();
-        }
-        if(annotation.annotationType().isAssignableFrom(ZzzAuthTagCustom.class)){
-            ZzzAuthTagCustom a = (ZzzAuthTagCustom) annotation;
-            return ZzzAuthEntity.builder().name(a.name()).value(a.value()).build();
-        }
-
-        return null;
+    private boolean isTagAnnotation(Annotation annotation){
+        return annotation.annotationType().isAssignableFrom(ZzzAuthTagAdd.class)
+                || annotation.annotationType().isAssignableFrom(ZzzAuthTagDel.class)
+                || annotation.annotationType().isAssignableFrom(ZzzAuthTagSelect.class)
+                || annotation.annotationType().isAssignableFrom(ZzzAuthTagUpdate.class);
     }
 
-    private void savePermission(String value, String name){
+    private void savePermission(String name, String value){
         permissionService.add(PermissionDTO.builder().name(name).value(value).build());
     }
 
@@ -90,7 +87,6 @@ public class AutoConfig implements BeanPostProcessor {
     @Builder
     private static class ZzzAuthEntity{
         private String name;
-
         private String value;
     }
 }

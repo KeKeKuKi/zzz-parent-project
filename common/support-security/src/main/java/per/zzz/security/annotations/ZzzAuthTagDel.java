@@ -14,8 +14,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
+@ZzzAuthTag(name = "删除", value = "delete")
 public @interface ZzzAuthTagDel {
-    String name() default "删除";
-
-    String value() default "delete";
 }

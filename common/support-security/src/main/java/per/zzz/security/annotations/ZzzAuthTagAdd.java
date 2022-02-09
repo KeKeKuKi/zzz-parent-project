@@ -14,8 +14,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
+@ZzzAuthTag(name = "新增", value = "add")
 public @interface ZzzAuthTagAdd {
-    String name() default "新增";
-
-    String value() default "add";
 }

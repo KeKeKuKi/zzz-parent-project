@@ -90,6 +90,7 @@ public class PermissionServiceImpl implements PermissionService {
     public Boolean add(PermissionDTO dto) {
         Permission byValue = permissionMapper.findByValue(dto.getValue());
         if(byValue != null){
+            log.warn("该权限已存在:" + dto.getValue());
             return false;
         }
 
