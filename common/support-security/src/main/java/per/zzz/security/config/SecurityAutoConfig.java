@@ -25,7 +25,6 @@ public class SecurityAutoConfig{
         SecurityContext securityContext = SecurityContextHolder.get();
         ZzzAuthTag zzzAuthTag = zzzAuthTagSelect.annotationType().getAnnotation(ZzzAuthTag.class);
         Map<ZzzAuthTag, String> cache = SecurityResourceRepository.getCache();
-
         System.out.println("```````````````````````````````" + zzzAuthTagSelect);
     }
 
