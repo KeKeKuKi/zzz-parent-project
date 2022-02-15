@@ -45,13 +45,6 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Resource
     private AuthenticationManager authorizationManager;
 
-//    public AuthorizationServer(TokenStore tokenStore, ClientDetailsService clientDetailsService, AuthorizationCodeServices authorizationCodeServices, AuthenticationManager authorizationManager) {
-//        this.tokenStore = tokenStore;
-//        this.clientDetailsService = clientDetailsService;
-//        this.authorizationCodeServices = authorizationCodeServices;
-//        this.authorizationManager = authorizationManager;
-//    }
-
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
