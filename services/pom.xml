@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>service-auth2</module>
+        <module>service-blog</module>
     </modules>
 
     <dependencies>
@@ -22,14 +23,10 @@
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>per.zzz.project</groupId>
+            <artifactId>suppert-cloud-discovery</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>com.baomidou</groupId>

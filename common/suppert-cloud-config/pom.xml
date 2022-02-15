@@ -9,19 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common</artifactId>
+    <artifactId>suppert-cloud-config</artifactId>
 
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>service-base</module>
-        <module>support-security</module>
-        <module>support-redis</module>
-        <module>suppert-mybatis</module>
-        <module>suppert-oss</module>
-        <module>suppert-cloud-discovery</module>
-        <module>suppert-cloud-config</module>
-    </modules>
-
+   <dependencies>
+       <dependency>
+           <groupId>com.alibaba.cloud</groupId>
+           <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+       </dependency>
+   </dependencies>
 
 </project>

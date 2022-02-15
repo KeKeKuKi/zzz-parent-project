@@ -1,0 +1,32 @@
+#spring:
+#  application:
+#    name: blog-server
+#  profiles:
+#    active: blog-dev
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 162.14.77.8:8848
+#      config:
+#        server-addr: 162.14.77.8:8848
+#        file-extension: yaml
+#        group: DEFAULT_GROUP
+#        extension-configs:
+#          - data-id: db.yaml
+#            group: DEFAULT_GROUP
+#            refresh: true
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://162.14.77.8:3306/blog?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: 166056
+#schedulerx2:
+#  endpoint: acm.aliyun.com
+#  groupId: dev-test
+#  access-key-id: LTAI5tNwvHfGDQYd9Ydm7PP5
+#  access-key-secret: afpJfIYf10cQC3v6lXYeU3HzyJcNW5
+#  region-id: cn-test
+#  domain: schedulerx.aliyuncs.com
+#  application-name: ${spring.application.name}
+#  namespace-name: dev
+#  namespace: 9f8365b8-9125-4f8f-935d-43fe0b2697f3

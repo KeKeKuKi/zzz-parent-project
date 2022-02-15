@@ -1,0 +1,25 @@
+server:
+  port: 8700
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 162.14.77.8:8848
+        watch-delay: 5000
+  application:
+    name: oauth2-server
+  redis:
+    host: 162.14.77.8
+    port: 6377
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://162.14.77.8:3306/blog?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 166056
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:/mapper/**Mapper.xml

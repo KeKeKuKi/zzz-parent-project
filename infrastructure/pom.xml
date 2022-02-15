@@ -15,6 +15,7 @@
 
     <modules>
         <module>api-gateway</module>
+        <module>service-oAuth2</module>
     </modules>
 
     <dependencies>

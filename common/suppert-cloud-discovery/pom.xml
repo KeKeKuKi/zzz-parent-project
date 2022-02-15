@@ -9,21 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>suppert-mybatis</artifactId>
+    <artifactId>suppert-cloud-discovery</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>per.zzz.project</groupId>
-            <artifactId>service-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
     </dependencies>
-
-
 
 </project>
