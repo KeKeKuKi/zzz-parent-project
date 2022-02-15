@@ -1,9 +1,5 @@
 server:
   port: 8899
-#qcloud:
-#  secretId: AKIDEOHwKRHszvc3FBsJVR8ZkgMmwrWv4yc0
-#  secretKey: A6mDOK0QaU9YhbGfqlRt64mGUSAdqnUw
-#  bucket: file-bucket-01-1307916663
 spring:
   application:
     name: blog-server
