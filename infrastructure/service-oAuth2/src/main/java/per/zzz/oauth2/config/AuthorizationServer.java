@@ -20,10 +20,14 @@ import org.springframework.security.oauth2.provider.code.AuthorizationCodeServic
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author 阿忠 2669918628@qq.com
@@ -44,6 +48,9 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     @Resource
     private AuthenticationManager authorizationManager;
+
+    @Resource
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -78,10 +85,19 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Bean
     public AuthorizationServerTokenServices tokenServices(){
         DefaultTokenServices services = new DefaultTokenServices();
+        // 客户端详情服务
         services.setClientDetailsService(clientDetailsService);
+        // 支持刷新令牌
         services.setSupportRefreshToken(true);
+        // 令牌存储策略
         services.setTokenStore(tokenStore);
+        // 令牌增强
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Collections.singletonList(jwtAccessTokenConverter));
+        services.setTokenEnhancer(tokenEnhancerChain);
+        // 令牌有效期
         services.setAccessTokenValiditySeconds(7200);
+        // 刷新令牌有效期
         services.setRefreshTokenValiditySeconds(259200);
         return services;
     }

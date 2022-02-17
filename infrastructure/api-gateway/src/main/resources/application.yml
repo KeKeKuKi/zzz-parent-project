@@ -9,7 +9,7 @@ spring:
     nacos:
       discovery:
         server-addr: 162.14.77.8:8848
-        watch-delay: 5000
+        watch-delay: 3000
     gateway:
       discovery:
         locator:
