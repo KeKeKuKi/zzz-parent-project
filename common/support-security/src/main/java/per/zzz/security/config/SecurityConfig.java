@@ -56,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().accessDeniedPage("/403.html")
                 .authenticationEntryPoint(new UnAuthEntryPoints()); // 自定义403
 
-
         http.formLogin()
                 .loginProcessingUrl("/login") // 登录接口地址
                 .and().authorizeRequests()
