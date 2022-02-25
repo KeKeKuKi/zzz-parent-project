@@ -21,6 +21,7 @@
         <module>suppert-oss</module>
         <module>suppert-cloud-discovery</module>
         <module>suppert-cloud-config</module>
+        <module>suppert-zookeeper</module>
     </modules>
 
 
