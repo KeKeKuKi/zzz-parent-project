@@ -17,6 +17,12 @@
             <artifactId>suppert-mybatis</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>per.zzz.project</groupId>
+            <artifactId>support-security</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

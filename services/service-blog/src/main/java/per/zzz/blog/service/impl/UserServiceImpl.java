@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(User user) {
         if("admin".equals(user.getUsername()) && "166056".equals(user.getPassword())){
-            return "zzz-tocken";
+            return "zzz-token";
         }
         return null;
     }
