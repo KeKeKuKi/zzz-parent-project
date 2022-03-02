@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 @SpringBootApplication
 public class BlogServerApplication {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(BlogServerApplication.class, args);
     }
 
