@@ -1,0 +1,16 @@
+server:
+  port: 6666
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://162.14.77.8:3306/blog?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 166056
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    show-sql: false
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL57Dialect

@@ -22,6 +22,8 @@
         <module>suppert-cloud-discovery</module>
         <module>suppert-cloud-config</module>
         <module>suppert-zookeeper</module>
+        <module>suppert-jsoup</module>
+        <module>suppert-jpa</module>
     </modules>
 
 
