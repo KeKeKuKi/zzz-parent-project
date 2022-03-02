@@ -18,7 +18,7 @@ import java.io.IOException;
 @Component
 public class UnAuthEntryPoints implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException {
         System.out.println("UnAuthEntryPoints -- 未授权");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.getWriter().write(JSONObject.toJSONString(Result.fail("forbidden！")));

@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import per.zzz.sdr.service.CacheService;
 import per.zzz.security.security.TokenService;
 
-import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
