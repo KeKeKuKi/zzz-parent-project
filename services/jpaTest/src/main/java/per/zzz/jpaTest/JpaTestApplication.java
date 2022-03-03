@@ -9,6 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class JpaTestApplication {
+    /**
+     * Jpa 官网文档 ：
+     * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#preface
+     */
     public static void main(String[] args) {
         SpringApplication.run(JpaTestApplication.class, args);
     }
