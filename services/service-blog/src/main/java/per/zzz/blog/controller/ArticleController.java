@@ -3,6 +3,8 @@ package per.zzz.blog.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.jaxb.PageAdapter;
 import org.springframework.web.bind.annotation.*;
 import per.zzz.base.utils.Result;
 import per.zzz.blog.dto.ArticleDTO;

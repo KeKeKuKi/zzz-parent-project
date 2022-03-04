@@ -3,10 +3,10 @@ package per.zzz.sdr.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.redis.core.*;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -90,7 +90,7 @@ public class RedisTemplateCacheServiceImpl implements CacheService, Initializing
     @Override
     public <T> T getFromJson(String key, Class<T> tClass) {
         String value = redisTemplate.opsForValue().get(getString(key));
-        if (!StringUtils.isEmpty(value)) {
+        if (!StringUtils.isBlank(value)) {
             return JSON.parseObject(value, tClass);
         }
         return null;
