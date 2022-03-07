@@ -22,5 +22,4 @@ import javax.annotation.Resource;
 public class ArticleBodyController{
     @Resource
     private final ArticleBodyService articleBodyService;
-
 }
