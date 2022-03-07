@@ -15,7 +15,6 @@ import javax.annotation.Resource;
  *
  * @author 阿忠
  * @since 2021-12-10 15:17:27
- * @description 自动创建
  */
 @Slf4j
 @RequiredArgsConstructor
