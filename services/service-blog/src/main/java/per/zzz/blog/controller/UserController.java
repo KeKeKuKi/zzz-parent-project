@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/user")
 public class UserController{
-    @Resource
     private final UserService userService;
 
     @PostMapping("login")
