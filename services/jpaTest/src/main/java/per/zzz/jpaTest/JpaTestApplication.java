@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JpaTestApplication {
     /**
+     *
      * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#preface
      */
     public static void main(String[] args) {
