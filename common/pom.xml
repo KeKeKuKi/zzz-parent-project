@@ -24,6 +24,7 @@
         <module>suppert-zookeeper</module>
         <module>suppert-jsoup</module>
         <module>suppert-jpa</module>
+        <module>suppert-rocketMq</module>
     </modules>
 
 

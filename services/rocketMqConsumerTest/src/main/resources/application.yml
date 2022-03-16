@@ -1,0 +1,5 @@
+rocketmq:
+  name-server: 162.14.77.8:9876
+  producer:
+    group: group1
+    send-message-timeout: 60000
