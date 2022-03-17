@@ -1,5 +1,6 @@
 package per.zzz.rocketMq.consumer.listener;
 
+import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import per.zzz.rocketMq.common.MessageDestination;
  * @since 2022/3/15 10:48
  */
 @Component
-@RocketMQMessageListener(topic = MessageDestination.Topics.TopicOne, consumerGroup = "group1",selectorExpression = MessageDestination.Tags.Tag1)
+@RocketMQMessageListener(topic = MessageDestination.Topics.TopicOne, consumerGroup = "group1",selectorExpression = MessageDestination.Tags.Tag1, consumeMode = ConsumeMode.ORDERLY)
 public class TestListener implements RocketMQListener<String> {
 
     @Override
