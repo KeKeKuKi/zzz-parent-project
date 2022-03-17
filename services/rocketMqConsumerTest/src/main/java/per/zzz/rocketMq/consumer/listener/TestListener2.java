@@ -7,14 +7,14 @@ import per.zzz.rocketMq.common.MessageDestination;
 
 /**
  * @author 阿忠 2669918628@qq.com
- * @since 2022/3/15 10:48
+ * @since 2022/3/17 9:22
  */
 @Component
-@RocketMQMessageListener(topic = MessageDestination.Topics.TopicOne, consumerGroup = "group1",selectorExpression = MessageDestination.Tags.Tag1)
-public class TestListener implements RocketMQListener<String> {
+@RocketMQMessageListener(topic = MessageDestination.Topics.TopicOne, consumerGroup = "group2",selectorExpression = MessageDestination.Tags.Tag2)
+public class TestListener2 implements RocketMQListener<String> {
 
     @Override
     public void onMessage(String s) {
-        System.out.println("TestListener1 收到消息：" + s);
+        System.out.println("TestListener2 收到消息：" + s);
     }
 }
