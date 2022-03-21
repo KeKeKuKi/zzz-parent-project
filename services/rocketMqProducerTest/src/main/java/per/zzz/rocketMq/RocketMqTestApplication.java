@@ -11,5 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RocketMqTestApplication {
     public static void main(String[] args) {
         SpringApplication.run(RocketMqTestApplication.class, args);
+
     }
 }
