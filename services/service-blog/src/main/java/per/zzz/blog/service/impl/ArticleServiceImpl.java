@@ -51,7 +51,8 @@ public class ArticleServiceImpl implements ArticleService {
                 .eq(Article::getWeight, dto.getWeight())
                 .eq(Article::getStatus, dto.getStatus())
                 .like(Article::getTitle, dto.getWords())
-                .like(Article::getSummary, dto.getWords());
+                .like(Article::getSummary, dto.getWords())
+                .orderByDesc(Article::getCreateDate);
     }
 
     @Override
