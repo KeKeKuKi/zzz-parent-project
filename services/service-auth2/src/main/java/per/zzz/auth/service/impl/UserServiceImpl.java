@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -19,6 +21,7 @@ import per.zzz.auth.dto.userRole.UserRoleDTO;
 import per.zzz.auth.entity.Role;
 import per.zzz.auth.entity.User;
 import per.zzz.auth.entity.UserRole;
+import per.zzz.auth.mapper.UserMapper;
 import per.zzz.auth.service.UserRoleService;
 import per.zzz.auth.service.UserService;
 import per.zzz.base.utils.BeanCopyUtils;
@@ -32,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 服务接口实现
@@ -51,6 +55,8 @@ public class UserServiceImpl implements UserService {
     private final UserRoleService userRoleService;
 
     private final CacheService cacheService;
+
+    private final UserMapper userMapper;
 
     private QueryWrapperBuilder<User> buildQuery(UserQueryDTO queryParam) {
         return QueryWrapperBuilder.<User>wrapper()
@@ -139,5 +145,30 @@ public class UserServiceImpl implements UserService {
 
         SecurityContextHolder.clear();
         return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void findAll() {
+        List<User> users = userMapper.selectList(null);
+        System.out.println(users.size());
+
+//        users = userMapper.selectList(null);
+//        System.out.println(users.size());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void insert() {
+        User user = new User();
+        user.setUsername("aaa");
+        user.setPassword("dddddd");
+        user.setName("nn");
+        userMapper.insert(user);
+        try {
+            TimeUnit.SECONDS.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

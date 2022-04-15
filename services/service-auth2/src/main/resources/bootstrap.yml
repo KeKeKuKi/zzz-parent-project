@@ -1,18 +1,19 @@
-#spring:
-#  application:
-#    name: auth-server
-#  cloud:
-#    nacos:
-#      discovery:
-#        server-addr: 162.14.77.8:8848
-#      config:
-#        server-addr: 162.14.77.8:8848
-#        file-extension: yaml
-#        group: DEFAULT_GROUP
-#        extension-configs:
-#          - data-id: db.yaml
-#            group: DEFAULT_GROUP
-#            refresh: true
+spring:
+  application:
+    name: auth-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 162.14.77.8:8848
+        watch-delay: 5000
+      config:
+        server-addr: 162.14.77.8:8848
+        file-extension: yaml
+        group: DEFAULT_GROUP
+        extension-configs:
+          - data-id: db.yaml
+            group: DEFAULT_GROUP
+            refresh: true
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://162.14.77.8:3306/blog?useUnicode=true&characterEncoding=utf-8

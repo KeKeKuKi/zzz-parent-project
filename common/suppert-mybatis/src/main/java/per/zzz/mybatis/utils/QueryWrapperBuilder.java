@@ -16,7 +16,7 @@ import java.util.Objects;
  * - 集合 isNotEmpty
  * - 其他对象 != null
  *
- * @author HuSen
+ * @author zzz
  * @since 2021/7/1 9:13 上午
  */
 public class QueryWrapperBuilder<T> extends AbstractLambdaWrapper<T, QueryWrapperBuilder<T>> {

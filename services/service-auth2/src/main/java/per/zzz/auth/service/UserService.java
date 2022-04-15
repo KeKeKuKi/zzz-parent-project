@@ -32,4 +32,8 @@ public interface UserService {
     Boolean update(UserDTO dto);
 
     Boolean logout(HttpServletRequest request);
+
+    void findAll();
+
+    void insert();
 }

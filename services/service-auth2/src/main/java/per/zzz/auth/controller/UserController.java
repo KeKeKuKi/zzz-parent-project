@@ -87,4 +87,13 @@ public class UserController {
         return Result.success(userService.update(dto));
     }
 
+    @GetMapping("/findAll")
+    void findAll() {
+        userService.findAll();
+    }
+
+    @GetMapping("/insert")
+    void insert() {
+        userService.insert();
+    }
 }

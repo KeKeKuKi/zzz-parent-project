@@ -59,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginProcessingUrl("/login") // 登录接口地址
                 .and().authorizeRequests()
-                .antMatchers("/","/login/","/logout").permitAll()// 路径白名单
+                .antMatchers("/","/login/","/logout","/user/**").permitAll()// 路径白名单
                 .anyRequest().authenticated()
                 .and().logout().logoutUrl("/logout")
                 .addLogoutHandler(new TokenLogoutHandler(cacheService,tokenService))
